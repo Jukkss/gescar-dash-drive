@@ -92,40 +92,49 @@ export function Catalogo() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
+            whileHover={{ y: -8 }}
           >
-            <Card className="bg-card border-border overflow-hidden hover:border-primary/50 transition-colors group">
-              <div className="relative h-48 bg-secondary flex items-center justify-center">
-                <Car className="w-20 h-20 text-muted-foreground group-hover:text-primary transition-colors" />
-                <Badge className="absolute top-3 right-3 bg-primary/20 text-primary border-0">
+            <Card className="bg-card border-border overflow-hidden hover:border-primary/60 hover:shadow-[0_0_30px_hsl(270_80%_55%/0.3)] transition-all duration-300 group">
+              <div className="relative h-48 bg-gradient-to-br from-secondary to-background flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent z-10" />
+                <Car className="w-24 h-24 text-primary/40 group-hover:text-primary/60 group-hover:scale-110 transition-all duration-500" />
+                <Badge className="absolute top-3 right-3 z-20 bg-primary text-primary-foreground border-0 shadow-lg">
                   Disponível
                 </Badge>
               </div>
-              <CardContent className="p-5">
-                <div className="mb-3">
-                  <h3 className="text-lg font-bold text-foreground">{vehicle.brand} {vehicle.model}</h3>
-                  <p className="text-2xl font-bold text-primary">
+              <CardContent className="p-5 space-y-4">
+                <div>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{vehicle.brand}</p>
+                  <h3 className="text-xl font-bold text-foreground">{vehicle.model}</h3>
+                  <p className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mt-1">
                     {vehicle.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-3 gap-2 mb-4">
-                  <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
-                    <Calendar className="w-4 h-4" />
-                    <span>{vehicle.year}</span>
+                <div className="flex justify-between items-center py-3 px-4 bg-secondary/50 rounded-lg">
+                  <div className="flex flex-col items-center gap-1">
+                    <Calendar className="w-4 h-4 text-primary" />
+                    <span className="text-xs text-muted-foreground">{vehicle.year}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
-                    <Gauge className="w-4 h-4" />
-                    <span>{(vehicle.mileage / 1000).toFixed(0)}k km</span>
+                  <div className="w-px h-8 bg-border" />
+                  <div className="flex flex-col items-center gap-1">
+                    <Gauge className="w-4 h-4 text-primary" />
+                    <span className="text-xs text-muted-foreground">{(vehicle.mileage / 1000).toFixed(0)}k km</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
-                    <Fuel className="w-4 h-4" />
-                    <span>{vehicle.fuel}</span>
+                  <div className="w-px h-8 bg-border" />
+                  <div className="flex flex-col items-center gap-1">
+                    <Fuel className="w-4 h-4 text-primary" />
+                    <span className="text-xs text-muted-foreground">{vehicle.fuel}</span>
                   </div>
                 </div>
 
-                <div className="flex gap-2">
-                  <Button variant="outline" className="flex-1">Ver Detalhes</Button>
-                  <Button variant="hero" className="flex-1">Fazer Proposta</Button>
+                <div className="flex gap-2 pt-2">
+                  <Button variant="outline" className="flex-1 border-border hover:border-primary hover:bg-primary/10">
+                    Ver Detalhes
+                  </Button>
+                  <Button className="flex-1 bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground">
+                    Fazer Proposta
+                  </Button>
                 </div>
               </CardContent>
             </Card>

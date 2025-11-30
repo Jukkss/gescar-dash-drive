@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation, Outlet } from 'react-router-dom';
+import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Car,
@@ -27,7 +27,13 @@ export function ClientLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -116,7 +122,7 @@ export function ClientLayout() {
               'w-full mt-4 text-muted-foreground hover:text-destructive',
               !sidebarOpen && 'px-0'
             )}
-            onClick={logout}
+            onClick={handleLogout}
           >
             <LogOut className="w-5 h-5" />
             {sidebarOpen && <span className="ml-2">Sair</span>}
@@ -189,7 +195,7 @@ export function ClientLayout() {
                 variant="ghost"
                 className="w-full mt-8 text-muted-foreground hover:text-destructive justify-start"
                 onClick={() => {
-                  logout();
+                  handleLogout();
                   setMobileMenuOpen(false);
                 }}
               >
