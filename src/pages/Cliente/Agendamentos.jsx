@@ -22,17 +22,7 @@ import {
 } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 
-interface Agendamento {
-  id: string;
-  vehicle: string;
-  type: 'visita' | 'test_drive';
-  date: string;
-  time: string;
-  location: string;
-  status: 'agendado' | 'concluido' | 'cancelado';
-}
-
-const mockAgendamentos: Agendamento[] = [
+const mockAgendamentos = [
   { id: '1', vehicle: 'Honda Civic 2023', type: 'test_drive', date: '2024-01-20', time: '14:00', location: 'Loja Centro', status: 'agendado' },
   { id: '2', vehicle: 'Toyota Corolla 2024', type: 'visita', date: '2024-01-18', time: '10:00', location: 'Loja Norte', status: 'concluido' },
 ];

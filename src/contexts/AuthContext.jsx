@@ -1,28 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { authAPI } from '@/services/api';
 
-export type UserRole = 'concessionaria' | 'cliente';
+const AuthContext = createContext(undefined);
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: UserRole;
-}
-
-interface AuthContextType {
-  user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string, role: UserRole) => Promise<void>;
-  logout: () => void;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -35,7 +17,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false);
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email, password) => {
     try {
       const response = await authAPI.login(email, password);
       const { token, user } = response.data;
@@ -45,15 +27,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
     } catch (error) {
       // For demo purposes, simulate successful login
-      // Default to concessionaria role for demo
-      const demoUser: User = { id: '1', name: 'Admin', email, role: 'concessionaria' };
+      const demoUser = { id: '1', name: 'Admin', email, role: 'concessionaria' };
       localStorage.setItem('gescar_token', 'demo_token');
       localStorage.setItem('gescar_user', JSON.stringify(demoUser));
       setUser(demoUser);
     }
   };
 
-  const register = async (name: string, email: string, password: string, role: UserRole) => {
+  const register = async (name, email, password, role) => {
     try {
       const response = await authAPI.register({ name, email, password, role });
       const { token, user } = response.data;
@@ -63,7 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
     } catch (error) {
       // For demo purposes, simulate successful registration
-      const demoUser: User = { id: '1', name, email, role };
+      const demoUser = { id: '1', name, email, role };
       localStorage.setItem('gescar_token', 'demo_token');
       localStorage.setItem('gescar_user', JSON.stringify(demoUser));
       setUser(demoUser);

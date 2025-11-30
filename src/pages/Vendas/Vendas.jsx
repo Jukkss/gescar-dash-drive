@@ -21,18 +21,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { StatCard } from '@/components/Cards/StatCard';
 
-interface Sale {
-  id: string;
-  vehicleModel: string;
-  vehicleBrand: string;
-  buyerName: string;
-  buyerEmail: string;
-  salePrice: number;
-  paymentMethod: string;
-  date: string;
-}
-
-const initialSales: Sale[] = [
+const initialSales = [
   {
     id: 's001',
     vehicleModel: 'Civic',
@@ -66,7 +55,7 @@ const initialSales: Sale[] = [
 ];
 
 export function Vendas() {
-  const [sales, setSales] = useState<Sale[]>(initialSales);
+  const [sales, setSales] = useState(initialSales);
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -88,7 +77,7 @@ export function Vendas() {
   const totalSales = sales.reduce((acc, s) => acc + s.salePrice, 0);
   const averageSale = sales.length > 0 ? totalSales / sales.length : 0;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!formData.vehicleModel || !formData.buyerName || !formData.salePrice) {
@@ -100,7 +89,7 @@ export function Vendas() {
       return;
     }
 
-    const newSale: Sale = {
+    const newSale = {
       id: `s${Date.now().toString(36)}`,
       vehicleModel: formData.vehicleModel,
       vehicleBrand: formData.vehicleBrand,

@@ -13,18 +13,7 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-interface Vehicle {
-  id: string;
-  model: string;
-  brand: string;
-  year: number;
-  price: number;
-  mileage: number;
-  fuel: string;
-  image: string;
-}
-
-const mockVehicles: Vehicle[] = [
+const mockVehicles = [
   { id: '1', model: 'Civic', brand: 'Honda', year: 2023, price: 125000, mileage: 15000, fuel: 'Flex', image: '/placeholder.svg' },
   { id: '2', model: 'Corolla', brand: 'Toyota', year: 2024, price: 145000, mileage: 8000, fuel: 'Híbrido', image: '/placeholder.svg' },
   { id: '3', model: 'Onix', brand: 'Chevrolet', year: 2023, price: 85000, mileage: 25000, fuel: 'Flex', image: '/placeholder.svg' },
