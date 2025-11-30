@@ -35,9 +35,9 @@ api.interceptors.response.use(
 
 // Auth endpoints
 export const authAPI = {
-  login: (email: string, password: string) =>
+  login: (email, password) =>
     api.post('/auth/login', { email, password }),
-  register: (data: { name: string; email: string; password: string; role: string }) =>
+  register: (data) =>
     api.post('/auth/register', data),
   logout: () => {
     localStorage.removeItem('gescar_token');
@@ -46,13 +46,13 @@ export const authAPI = {
 
 // Vehicles endpoints
 export const vehiclesAPI = {
-  getAll: (params?: { status?: string; year?: number; brand?: string }) =>
+  getAll: (params) =>
     api.get('/veiculos', { params }),
-  getById: (id: string) => api.get(`/veiculos/${id}`),
-  create: (data: VehicleData) => api.post('/veiculos', data),
-  update: (id: string, data: Partial<VehicleData>) =>
+  getById: (id) => api.get(`/veiculos/${id}`),
+  create: (data) => api.post('/veiculos', data),
+  update: (id, data) =>
     api.put(`/veiculos/${id}`, data),
-  delete: (id: string) => api.delete(`/veiculos/${id}`),
+  delete: (id) => api.delete(`/veiculos/${id}`),
 };
 
 // Dashboard endpoints
@@ -63,42 +63,15 @@ export const dashboardAPI = {
 // Sales endpoints
 export const salesAPI = {
   getAll: () => api.get('/vendas'),
-  create: (data: SaleData) => api.post('/vendas', data),
+  create: (data) => api.post('/vendas', data),
 };
 
 // Repairs endpoints
 export const repairsAPI = {
   getAll: () => api.get('/reparos'),
-  create: (data: RepairData) => api.post('/reparos', data),
-  updateStatus: (id: string, status: string) =>
+  create: (data) => api.post('/reparos', data),
+  updateStatus: (id, status) =>
     api.patch(`/reparos/${id}/status`, { status }),
 };
-
-// Types
-export interface VehicleData {
-  model: string;
-  brand: string;
-  year: number;
-  price: number;
-  status: 'estoque' | 'vendido' | 'reparo';
-  color?: string;
-  mileage?: number;
-  description?: string;
-}
-
-export interface SaleData {
-  vehicleId: string;
-  buyerName: string;
-  buyerEmail: string;
-  salePrice: number;
-  paymentMethod: string;
-}
-
-export interface RepairData {
-  vehicleId: string;
-  description: string;
-  estimatedCost: number;
-  status: 'em_andamento' | 'concluido';
-}
 
 export default api;

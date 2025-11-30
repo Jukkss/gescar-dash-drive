@@ -4,15 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-interface Proposta {
-  id: string;
-  vehicle: string;
-  value: number;
-  status: 'pendente' | 'aprovada' | 'recusada';
-  date: string;
-}
-
-const mockPropostas: Proposta[] = [
+const mockPropostas = [
   { id: '1', vehicle: 'Honda Civic 2023', value: 120000, status: 'pendente', date: '2024-01-15' },
   { id: '2', vehicle: 'Toyota Corolla 2024', value: 140000, status: 'aprovada', date: '2024-01-10' },
   { id: '3', vehicle: 'Chevrolet Onix 2023', value: 80000, status: 'recusada', date: '2024-01-05' },

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Search, Filter, X } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { VehicleTable, Vehicle } from '@/components/Tables/VehicleTable';
+import { VehicleTable } from '@/components/Tables/VehicleTable';
 import {
   Dialog,
   DialogContent,
@@ -21,7 +21,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 
-const initialVehicles: Vehicle[] = [
+const initialVehicles = [
   { id: 'v001abc', model: 'Civic', brand: 'Honda', year: 2023, price: 125000, status: 'estoque' },
   { id: 'v002def', model: 'Corolla', brand: 'Toyota', year: 2024, price: 145000, status: 'estoque' },
   { id: 'v003ghi', model: 'Onix', brand: 'Chevrolet', year: 2023, price: 85000, status: 'estoque' },
@@ -32,16 +32,7 @@ const initialVehicles: Vehicle[] = [
   { id: 'v008vwx', model: 'Creta', brand: 'Hyundai', year: 2024, price: 140000, status: 'estoque' },
 ];
 
-interface VehicleFormData {
-  model: string;
-  brand: string;
-  year: string;
-  price: string;
-  status: 'estoque' | 'vendido' | 'reparo';
-  color: string;
-}
-
-const initialFormData: VehicleFormData = {
+const initialFormData = {
   model: '',
   brand: '',
   year: '',
@@ -51,11 +42,11 @@ const initialFormData: VehicleFormData = {
 };
 
 export function Estoque() {
-  const [vehicles, setVehicles] = useState<Vehicle[]>(initialVehicles);
+  const [vehicles, setVehicles] = useState(initialVehicles);
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [formData, setFormData] = useState<VehicleFormData>(initialFormData);
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [formData, setFormData] = useState(initialFormData);
+  const [editingId, setEditingId] = useState(null);
   const { toast } = useToast();
 
   const filteredVehicles = vehicles.filter(
@@ -64,7 +55,7 @@ export function Estoque() {
       v.brand.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!formData.model || !formData.brand || !formData.year || !formData.price) {
@@ -97,7 +88,7 @@ export function Estoque() {
         description: 'Veículo atualizado com sucesso!',
       });
     } else {
-      const newVehicle: Vehicle = {
+      const newVehicle = {
         id: `v${Date.now().toString(36)}`,
         model: formData.model,
         brand: formData.brand,
@@ -118,7 +109,7 @@ export function Estoque() {
     setIsDialogOpen(false);
   };
 
-  const handleEdit = (vehicle: Vehicle) => {
+  const handleEdit = (vehicle) => {
     setFormData({
       model: vehicle.model,
       brand: vehicle.brand,
@@ -131,7 +122,7 @@ export function Estoque() {
     setIsDialogOpen(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id) => {
     setVehicles((prev) => prev.filter((v) => v.id !== id));
     toast({
       title: 'Sucesso',
@@ -232,7 +223,7 @@ export function Estoque() {
                   <Label htmlFor="status">Status</Label>
                   <Select
                     value={formData.status}
-                    onValueChange={(value: 'estoque' | 'vendido' | 'reparo') =>
+                    onValueChange={(value) =>
                       setFormData({ ...formData, status: value })
                     }
                   >

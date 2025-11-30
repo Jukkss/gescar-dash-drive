@@ -5,9 +5,8 @@ import { StatCard } from '@/components/Cards/StatCard';
 import { ChartPie } from '@/components/Charts/ChartPie';
 import { ChartLine } from '@/components/Charts/ChartLine';
 import { ChartBar } from '@/components/Charts/ChartBar';
-import { VehicleTable, Vehicle } from '@/components/Tables/VehicleTable';
+import { VehicleTable } from '@/components/Tables/VehicleTable';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -18,10 +17,10 @@ import {
 
 // Mock data
 const statsData = [
-  { title: 'Veículos em Estoque', value: 124, icon: Car, trend: { value: 12, isPositive: true }, variant: 'primary' as const },
-  { title: 'Vendidos este Mês', value: 23, icon: ShoppingCart, trend: { value: 8, isPositive: true }, variant: 'success' as const },
-  { title: 'Em Reparo', value: 7, icon: Wrench, trend: { value: 2, isPositive: false }, variant: 'warning' as const },
-  { title: 'Clientes Ativos', value: 342, icon: Users, trend: { value: 15, isPositive: true }, variant: 'accent' as const },
+  { title: 'Veículos em Estoque', value: 124, icon: Car, trend: { value: 12, isPositive: true }, variant: 'primary' },
+  { title: 'Vendidos este Mês', value: 23, icon: ShoppingCart, trend: { value: 8, isPositive: true }, variant: 'success' },
+  { title: 'Em Reparo', value: 7, icon: Wrench, trend: { value: 2, isPositive: false }, variant: 'warning' },
+  { title: 'Clientes Ativos', value: 342, icon: Users, trend: { value: 15, isPositive: true }, variant: 'accent' },
 ];
 
 const statusChartData = [
@@ -47,7 +46,7 @@ const stockChartData = [
   { name: 'Esportivo', value: 7 },
 ];
 
-const mockVehicles: Vehicle[] = [
+const mockVehicles = [
   { id: 'v001abc', model: 'Civic', brand: 'Honda', year: 2023, price: 125000, status: 'estoque' },
   { id: 'v002def', model: 'Corolla', brand: 'Toyota', year: 2024, price: 145000, status: 'estoque' },
   { id: 'v003ghi', model: 'Onix', brand: 'Chevrolet', year: 2023, price: 85000, status: 'vendido' },
@@ -57,9 +56,9 @@ const mockVehicles: Vehicle[] = [
 ];
 
 export function Dashboard() {
-  const [vehicles] = useState<Vehicle[]>(mockVehicles);
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [brandFilter, setBrandFilter] = useState<string>('all');
+  const [vehicles] = useState(mockVehicles);
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [brandFilter, setBrandFilter] = useState('all');
 
   const filteredVehicles = vehicles.filter((v) => {
     if (statusFilter !== 'all' && v.status !== statusFilter) return false;

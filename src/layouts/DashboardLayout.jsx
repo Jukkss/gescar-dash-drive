@@ -7,7 +7,6 @@ import {
   Package,
   ShoppingCart,
   Wrench,
-  Users,
   Settings,
   LogOut,
   Menu,
@@ -23,7 +22,6 @@ const sidebarLinks = [
   { name: 'Estoque', href: '/estoque', icon: Package },
   { name: 'Vendas', href: '/vendas', icon: ShoppingCart },
   { name: 'Reparos', href: '/reparos', icon: Wrench },
-  { name: 'Clientes', href: '/clientes', icon: Users },
   { name: 'Configurações', href: '/configuracoes', icon: Settings },
 ];
 

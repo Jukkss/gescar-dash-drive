@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Search, Wrench, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { Plus, Search, Wrench, Clock, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -23,17 +23,7 @@ import { useToast } from '@/hooks/use-toast';
 import { StatCard } from '@/components/Cards/StatCard';
 import { cn } from '@/lib/utils';
 
-interface Repair {
-  id: string;
-  vehicleModel: string;
-  vehicleBrand: string;
-  description: string;
-  estimatedCost: number;
-  status: 'em_andamento' | 'concluido';
-  entryDate: string;
-}
-
-const initialRepairs: Repair[] = [
+const initialRepairs = [
   {
     id: 'r001',
     vehicleModel: 'HB20',
@@ -64,16 +54,10 @@ const initialRepairs: Repair[] = [
 ];
 
 export function Reparos() {
-  const [repairs, setRepairs] = useState<Repair[]>(initialRepairs);
+  const [repairs, setRepairs] = useState(initialRepairs);
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [formData, setFormData] = useState<{
-    vehicleModel: string;
-    vehicleBrand: string;
-    description: string;
-    estimatedCost: string;
-    status: 'em_andamento' | 'concluido';
-  }>({
+  const [formData, setFormData] = useState({
     vehicleModel: '',
     vehicleBrand: '',
     description: '',
@@ -92,7 +76,7 @@ export function Reparos() {
   const completedCount = repairs.filter((r) => r.status === 'concluido').length;
   const totalCost = repairs.reduce((acc, r) => acc + r.estimatedCost, 0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!formData.vehicleModel || !formData.description) {
@@ -104,7 +88,7 @@ export function Reparos() {
       return;
     }
 
-    const newRepair: Repair = {
+    const newRepair = {
       id: `r${Date.now().toString(36)}`,
       vehicleModel: formData.vehicleModel,
       vehicleBrand: formData.vehicleBrand,
@@ -130,7 +114,7 @@ export function Reparos() {
     setIsDialogOpen(false);
   };
 
-  const handleStatusChange = (id: string, newStatus: 'em_andamento' | 'concluido') => {
+  const handleStatusChange = (id, newStatus) => {
     setRepairs((prev) =>
       prev.map((r) => (r.id === id ? { ...r, status: newStatus } : r))
     );
@@ -213,7 +197,7 @@ export function Reparos() {
                   <Select
                     value={formData.status}
                     onValueChange={(value) =>
-                      setFormData({ ...formData, status: value as 'em_andamento' | 'concluido' })
+                      setFormData({ ...formData, status: value })
                     }
                   >
                     <SelectTrigger className="bg-background border-border">
@@ -326,7 +310,7 @@ export function Reparos() {
                 <Select
                   value={repair.status}
                   onValueChange={(value) =>
-                    handleStatusChange(repair.id, value as 'em_andamento' | 'concluido')
+                    handleStatusChange(repair.id, value)
                   }
                 >
                   <SelectTrigger className="w-[150px] bg-background border-border">
