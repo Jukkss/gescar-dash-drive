@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Car, Mail, Lock, User, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { Car, Mail, Lock, User, ArrowRight, Eye, EyeOff, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, UserRole } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 export function Cadastro() {
   const [name, setName] = useState('');
@@ -15,6 +16,7 @@ export function Cadastro() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<UserRole>('cliente');
   const { register } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -51,12 +53,12 @@ export function Cadastro() {
 
     setIsLoading(true);
     try {
-      await register(name, email, password);
+      await register(name, email, password, selectedRole);
       toast({
         title: 'Conta criada!',
         description: 'Bem-vindo ao GesCAR.',
       });
-      navigate('/dashboard');
+      navigate(selectedRole === 'concessionaria' ? '/dashboard' : '/catalogo');
     } catch (error) {
       toast({
         title: 'Erro',
@@ -106,9 +108,44 @@ export function Cadastro() {
             </span>
           </Link>
 
-          <div className="mb-8">
+          <div className="mb-6">
             <h1 className="text-3xl font-bold text-foreground mb-2">Crie sua conta</h1>
             <p className="text-muted-foreground">Preencha os dados para começar</p>
+          </div>
+
+          {/* Role Selection */}
+          <div className="mb-6">
+            <Label className="mb-3 block">Tipo de conta:</Label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setSelectedRole('cliente')}
+                className={cn(
+                  'flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all',
+                  selectedRole === 'cliente'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-border bg-card text-muted-foreground hover:border-primary/50'
+                )}
+              >
+                <User className="w-6 h-6" />
+                <span className="font-medium">Cliente</span>
+                <span className="text-xs opacity-70">Comprar veículos</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedRole('concessionaria')}
+                className={cn(
+                  'flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all',
+                  selectedRole === 'concessionaria'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-border bg-card text-muted-foreground hover:border-primary/50'
+                )}
+              >
+                <Building2 className="w-6 h-6" />
+                <span className="font-medium">Concessionária</span>
+                <span className="text-xs opacity-70">Gerenciar estoque</span>
+              </button>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">

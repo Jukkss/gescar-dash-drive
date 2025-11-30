@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { DashboardLayout } from "@/layouts/DashboardLayout";
+import { ClientLayout } from "@/layouts/ClientLayout";
 
 // Lazy loaded pages
 const Landing = lazy(() => import('./pages/Landing/Landing').then(m => ({ default: m.Landing })));
@@ -16,6 +17,12 @@ const Estoque = lazy(() => import('./pages/Estoque/Estoque').then(m => ({ defaul
 const Vendas = lazy(() => import('./pages/Vendas/Vendas').then(m => ({ default: m.Vendas })));
 const Reparos = lazy(() => import('./pages/Reparos/Reparos').then(m => ({ default: m.Reparos })));
 const NotFound = lazy(() => import('./pages/NotFound'));
+
+// Client pages
+const Catalogo = lazy(() => import('./pages/Cliente/Catalogo').then(m => ({ default: m.Catalogo })));
+const Perfil = lazy(() => import('./pages/Cliente/Perfil').then(m => ({ default: m.Perfil })));
+const Propostas = lazy(() => import('./pages/Cliente/Propostas').then(m => ({ default: m.Propostas })));
+const Agendamentos = lazy(() => import('./pages/Cliente/Agendamentos').then(m => ({ default: m.Agendamentos })));
 
 const queryClient = new QueryClient();
 
@@ -44,7 +51,7 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/cadastro" element={<Cadastro />} />
               
-              {/* Dashboard Routes */}
+              {/* Dashboard Routes - Concessionária */}
               <Route element={<DashboardLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/estoque" element={<Estoque />} />
@@ -52,6 +59,14 @@ const App = () => (
                 <Route path="/reparos" element={<Reparos />} />
                 <Route path="/clientes" element={<Dashboard />} />
                 <Route path="/configuracoes" element={<Dashboard />} />
+              </Route>
+
+              {/* Client Routes - Cliente */}
+              <Route element={<ClientLayout />}>
+                <Route path="/catalogo" element={<Catalogo />} />
+                <Route path="/perfil" element={<Perfil />} />
+                <Route path="/propostas" element={<Propostas />} />
+                <Route path="/agendamentos" element={<Agendamentos />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />

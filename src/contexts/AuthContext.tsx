@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { authAPI } from '@/services/api';
 
+export type UserRole = 'concessionaria' | 'cliente';
+
 interface User {
   id: string;
   name: string;
   email: string;
-  role: string;
+  role: UserRole;
 }
 
 interface AuthContextType {
@@ -13,7 +15,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string, role: UserRole) => Promise<void>;
   logout: () => void;
 }
 
@@ -43,16 +45,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
     } catch (error) {
       // For demo purposes, simulate successful login
-      const demoUser = { id: '1', name: 'Admin', email, role: 'admin' };
+      // Default to concessionaria role for demo
+      const demoUser: User = { id: '1', name: 'Admin', email, role: 'concessionaria' };
       localStorage.setItem('gescar_token', 'demo_token');
       localStorage.setItem('gescar_user', JSON.stringify(demoUser));
       setUser(demoUser);
     }
   };
 
-  const register = async (name: string, email: string, password: string) => {
+  const register = async (name: string, email: string, password: string, role: UserRole) => {
     try {
-      const response = await authAPI.register({ name, email, password });
+      const response = await authAPI.register({ name, email, password, role });
       const { token, user } = response.data;
       
       localStorage.setItem('gescar_token', token);
@@ -60,7 +63,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
     } catch (error) {
       // For demo purposes, simulate successful registration
-      const demoUser = { id: '1', name, email, role: 'admin' };
+      const demoUser: User = { id: '1', name, email, role };
       localStorage.setItem('gescar_token', 'demo_token');
       localStorage.setItem('gescar_user', JSON.stringify(demoUser));
       setUser(demoUser);
