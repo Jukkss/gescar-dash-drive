@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Car, Mail, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { Car, Mail, Lock, ArrowRight, Eye, EyeOff, Building2, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, UserRole } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<UserRole>('cliente');
   const { login } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -36,7 +38,14 @@ export function Login() {
         title: 'Bem-vindo!',
         description: 'Login realizado com sucesso.',
       });
-      navigate('/dashboard');
+      // Redirect based on role (demo uses selectedRole)
+      const savedUser = localStorage.getItem('gescar_user');
+      if (savedUser) {
+        const user = JSON.parse(savedUser);
+        navigate(user.role === 'concessionaria' ? '/dashboard' : '/catalogo');
+      } else {
+        navigate(selectedRole === 'concessionaria' ? '/dashboard' : '/catalogo');
+      }
     } catch (error) {
       toast({
         title: 'Erro',
@@ -67,6 +76,39 @@ export function Login() {
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2">Bem-vindo de volta</h1>
             <p className="text-muted-foreground">Entre na sua conta para continuar</p>
+          </div>
+
+          {/* Role Selection */}
+          <div className="mb-6">
+            <Label className="mb-3 block">Entrar como:</Label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setSelectedRole('cliente')}
+                className={cn(
+                  'flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all',
+                  selectedRole === 'cliente'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-border bg-card text-muted-foreground hover:border-primary/50'
+                )}
+              >
+                <User className="w-6 h-6" />
+                <span className="font-medium">Cliente</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedRole('concessionaria')}
+                className={cn(
+                  'flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all',
+                  selectedRole === 'concessionaria'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-border bg-card text-muted-foreground hover:border-primary/50'
+                )}
+              >
+                <Building2 className="w-6 h-6" />
+                <span className="font-medium">Concessionária</span>
+              </button>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
