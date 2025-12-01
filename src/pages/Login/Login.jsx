@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Mail, Lock, ArrowRight, Eye, EyeOff, Building2, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -39,7 +38,6 @@ export function Login() {
         title: 'Bem-vindo!',
         description: 'Login realizado com sucesso.',
       });
-      // Redirect based on role (demo uses selectedRole)
       const savedUser = localStorage.getItem('gescar_user');
       if (savedUser) {
         const user = JSON.parse(savedUser);
@@ -59,20 +57,16 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex flex-col lg:flex-row">
       {/* Left Side - Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md"
-        >
+      <div className="flex-1 flex items-center justify-center p-6 lg:p-8 min-h-screen lg:min-h-0">
+        <div className="w-full max-w-md">
           <Link to="/" className="flex items-center gap-2 mb-8">
-            <img src={gescarLogo} alt="GesCar" className="h-14" />
+            <img src={gescarLogo} alt="GesCar" className="h-12" />
           </Link>
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Bem-vindo de volta</h1>
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">Bem-vindo de volta</h1>
             <p className="text-muted-foreground">Entre na sua conta para continuar</p>
           </div>
 
@@ -109,7 +103,7 @@ export function Login() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <div className="relative">
@@ -120,7 +114,7 @@ export function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="seu@email.com"
-                  className="pl-10 bg-card border-border h-12"
+                  className="pl-10 bg-card border-border h-11"
                 />
               </div>
             </div>
@@ -135,7 +129,7 @@ export function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="pl-10 pr-10 bg-card border-border h-12"
+                  className="pl-10 pr-10 bg-card border-border h-11"
                 />
                 <button
                   type="button"
@@ -169,27 +163,22 @@ export function Login() {
             </Button>
           </form>
 
-          <p className="mt-8 text-center text-muted-foreground">
+          <p className="mt-6 text-center text-muted-foreground">
             Não tem uma conta?{' '}
             <Link to="/cadastro" className="text-primary hover:underline font-medium">
               Cadastre-se
             </Link>
           </p>
-        </motion.div>
+        </div>
       </div>
 
       {/* Right Side - Decorative */}
-      <div className="hidden lg:flex flex-1 bg-card items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-neon-cyan/20" />
+      <div className="hidden lg:flex lg:w-1/2 bg-card items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/10" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl" />
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="relative z-10 text-center p-8"
-        >
+        <div className="relative z-10 text-center p-8">
           <img src={gescarLogo} alt="GesCar" className="w-32 h-32 mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-foreground mb-4">
             Gerencie sua concessionária
@@ -197,7 +186,7 @@ export function Login() {
           <p className="text-muted-foreground max-w-md">
             Acesse o painel de controle e tenha visão completa do seu estoque, vendas e clientes.
           </p>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

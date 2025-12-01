@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight, Eye, EyeOff, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -72,19 +71,14 @@ export function Cadastro() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex flex-col lg:flex-row">
       {/* Left Side - Decorative */}
-      <div className="hidden lg:flex flex-1 bg-card items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-neon-cyan/20" />
+      <div className="hidden lg:flex lg:w-1/2 bg-card items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/10" />
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/30 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl" />
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="relative z-10 text-center p-8"
-        >
+        <div className="relative z-10 text-center p-8">
           <img src={gescarLogo} alt="GesCar" className="w-32 h-32 mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-foreground mb-4">
             Comece a transformar
@@ -92,22 +86,18 @@ export function Cadastro() {
           <p className="text-muted-foreground max-w-md">
             Crie sua conta e tenha acesso a todas as ferramentas para gerenciar sua concessionária.
           </p>
-        </motion.div>
+        </div>
       </div>
 
       {/* Right Side - Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md"
-        >
+      <div className="flex-1 flex items-center justify-center p-6 lg:p-8 min-h-screen lg:min-h-0">
+        <div className="w-full max-w-md">
           <Link to="/" className="flex items-center gap-2 mb-8">
-            <img src={gescarLogo} alt="GesCar" className="h-14" />
+            <img src={gescarLogo} alt="GesCar" className="h-12" />
           </Link>
 
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Crie sua conta</h1>
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">Crie sua conta</h1>
             <p className="text-muted-foreground">Preencha os dados para começar</p>
           </div>
 
@@ -146,7 +136,7 @@ export function Cadastro() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Nome completo</Label>
               <div className="relative">
@@ -157,7 +147,7 @@ export function Cadastro() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Seu nome"
-                  className="pl-10 bg-card border-border h-12"
+                  className="pl-10 bg-card border-border h-11"
                 />
               </div>
             </div>
@@ -172,7 +162,7 @@ export function Cadastro() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="seu@email.com"
-                  className="pl-10 bg-card border-border h-12"
+                  className="pl-10 bg-card border-border h-11"
                 />
               </div>
             </div>
@@ -187,7 +177,7 @@ export function Cadastro() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="pl-10 pr-10 bg-card border-border h-12"
+                  className="pl-10 pr-10 bg-card border-border h-11"
                 />
                 <button
                   type="button"
@@ -209,7 +199,7 @@ export function Cadastro() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="pl-10 bg-card border-border h-12"
+                  className="pl-10 bg-card border-border h-11"
                 />
               </div>
             </div>
@@ -240,13 +230,13 @@ export function Cadastro() {
             </Button>
           </form>
 
-          <p className="mt-8 text-center text-muted-foreground">
+          <p className="mt-6 text-center text-muted-foreground">
             Já tem uma conta?{' '}
             <Link to="/login" className="text-primary hover:underline font-medium">
               Faça login
             </Link>
           </p>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
