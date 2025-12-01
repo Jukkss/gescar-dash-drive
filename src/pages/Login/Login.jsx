@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Car, Mail, Lock, ArrowRight, Eye, EyeOff, Building2, User } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Eye, EyeOff, Building2, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import gescarLogo from '@/assets/gescar-logo.png';
 
 export function Login() {
   const [email, setEmail] = useState('');
@@ -67,10 +68,7 @@ export function Login() {
           className="w-full max-w-md"
         >
           <Link to="/" className="flex items-center gap-2 mb-8">
-            <Car className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-bold">
-              Ges<span className="text-gradient">CAR</span>
-            </span>
+            <img src={gescarLogo} alt="GesCar" className="h-14" />
           </Link>
 
           <div className="mb-8">
@@ -192,7 +190,7 @@ export function Login() {
           transition={{ delay: 0.3 }}
           className="relative z-10 text-center p-8"
         >
-          <Car className="w-24 h-24 text-primary mx-auto mb-6" />
+          <img src={gescarLogo} alt="GesCar" className="w-32 h-32 mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-foreground mb-4">
             Gerencie sua concessionária
           </h2>
