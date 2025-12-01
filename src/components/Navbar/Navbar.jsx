@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Car } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import gescarLogo from '@/assets/gescar-logo.png';
 
 const navLinks = [
   { name: 'Concessionárias', href: '/#concessionarias' },
@@ -23,13 +24,11 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="relative">
-              <Car className="w-8 h-8 text-primary transition-all duration-300 group-hover:text-neon-cyan" />
-              <div className="absolute inset-0 blur-lg bg-primary/30 group-hover:bg-neon-cyan/30 transition-all duration-300" />
-            </div>
-            <span className="text-xl lg:text-2xl font-bold">
-              Ges<span className="text-gradient">CAR</span>
-            </span>
+            <img 
+              src={gescarLogo} 
+              alt="GesCar" 
+              className="h-12 lg:h-14 transition-all duration-300 group-hover:scale-105" 
+            />
           </Link>
 
           {/* Desktop Navigation */}

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Car,
   LayoutDashboard,
   Package,
   ShoppingCart,
@@ -13,6 +12,7 @@ import {
   X,
   ChevronRight,
 } from 'lucide-react';
+import gescarLogo from '@/assets/gescar-logo.png';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -49,16 +49,11 @@ export function DashboardLayout() {
         {/* Logo */}
         <div className="h-20 flex items-center justify-between px-4 border-b border-border">
           <Link to="/dashboard" className="flex items-center gap-2">
-            <Car className="w-8 h-8 text-primary" />
-            {sidebarOpen && (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-xl font-bold"
-              >
-                Ges<span className="text-gradient">CAR</span>
-              </motion.span>
-            )}
+            <img 
+              src={gescarLogo} 
+              alt="GesCar" 
+              className={cn("transition-all duration-300", sidebarOpen ? "h-12" : "h-10")} 
+            />
           </Link>
           <Button
             variant="ghost"
@@ -135,10 +130,7 @@ export function DashboardLayout() {
       {/* Mobile Header */}
       <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-card border-b border-border flex items-center justify-between px-4 z-40">
         <Link to="/dashboard" className="flex items-center gap-2">
-          <Car className="w-7 h-7 text-primary" />
-          <span className="text-lg font-bold">
-            Ges<span className="text-gradient">CAR</span>
-          </span>
+          <img src={gescarLogo} alt="GesCar" className="h-10" />
         </Link>
         <Button
           variant="ghost"
@@ -160,10 +152,7 @@ export function DashboardLayout() {
           >
             <div className="h-16 flex items-center justify-between px-4 border-b border-border">
               <Link to="/dashboard" className="flex items-center gap-2">
-                <Car className="w-7 h-7 text-primary" />
-                <span className="text-lg font-bold">
-                  Ges<span className="text-gradient">CAR</span>
-                </span>
+                <img src={gescarLogo} alt="GesCar" className="h-10" />
               </Link>
               <Button
                 variant="ghost"

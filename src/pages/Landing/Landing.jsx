@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/Navbar/Navbar';
 import { Footer } from '@/components/Footer/Footer';
 import heroImage from '@/assets/hero-car.jpg';
+import gescarLogo from '@/assets/gescar-logo.png';
 
 const features = [
   {
@@ -140,9 +141,7 @@ export function Landing() {
                 className="absolute -left-8 bottom-20 glass-card p-4 border border-border"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-success" />
-                  </div>
+                  <img src={gescarLogo} alt="GesCar" className="w-10 h-10" />
                   <div>
                     <p className="text-sm font-medium text-foreground">+23% vendas</p>
                     <p className="text-xs text-muted-foreground">este mês</p>
